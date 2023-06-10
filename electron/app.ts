@@ -1,11 +1,28 @@
 import { config } from 'dotenv';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, App as ElectronApp } from 'electron';
 import path from 'path';
 import url from 'url';
+import { ConfigManager } from './ConfigManager';
 
 config({
     path: path.resolve(__dirname, '../.env'),
 });
+
+export class App {
+    public readonly app: ElectronApp;
+    public readonly configManager: ConfigManager;
+
+    public constructor(public readonly win: BrowserWindow) {
+        this.app = app;
+        this.configManager = new ConfigManager(this);
+    }
+
+    public run() {
+        if (!this.configManager.config.user) {
+            this.win.webContents.send('unauthorized');
+        }
+    }
+}
 
 function createWindow() {
     const startUrl = process.env.ELECTRON_START_URL ?? url.format({
@@ -19,17 +36,24 @@ function createWindow() {
         minHeight: 500,
         webPreferences: {
             nodeIntegration: true,
-            webSecurity: false
+            preload: path.resolve(__dirname, "preload.js")
         },
     });
 
-    win.setMenu(null);
+    if (process.env.SYSENV !== 'dev')
+        win.setMenu(null);
+    
     win.loadURL(startUrl);
 
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin') {
             app.quit();
         }
+    });
+
+    win.webContents.once('did-finish-load', () => {
+        const application = new App(win);
+        application.run();
     });
 }
 

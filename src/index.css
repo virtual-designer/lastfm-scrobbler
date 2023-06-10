@@ -5,7 +5,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'SF Sans', system-ui, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+    font-family: Roboto, 'SF Sans', system-ui, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
