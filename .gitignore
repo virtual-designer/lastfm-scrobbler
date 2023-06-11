@@ -28,3 +28,4 @@ electron_build/
 build/
 
 .env
+*-bak/

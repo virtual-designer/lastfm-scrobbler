@@ -1,5 +1,5 @@
 import { MdAccountCircle, MdHome, MdSearch, MdSettings } from "react-icons/md";
-import { createBrowserRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import Main from "./pages/Main";
 
@@ -30,7 +30,7 @@ export const routes = [
     },
 ];
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
     {
         path: '/',
         element: <Layout />,
