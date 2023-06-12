@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
-import { MdLockOutline } from 'react-icons/md';
-import CustomButton from "../components/CustomButton";
+import { Card, CardContent } from "@mui/material";
+import { useEffect, useState } from "react";
+import { MdOutlineBarChart } from "react-icons/md";
+import MainActions from "../components/MainActions";
+import MainBottom from "../components/MainBottom";
+import NotSignedIn from "../components/NotSignedIn";
 
 export default function Main() {
     const [state, setState] = useState<boolean | null>(null);
 
     useEffect(() => {
         window.api.receive("unauthorized", () => {
-            setState(false);
-            window.alert("Received!");
+            setState(null);
         });
+
+        setState(true);
 
         return () => {
             window.api.removeReceiveListeners("unauthorized");
@@ -18,29 +22,46 @@ export default function Main() {
 
     return (
         <div>
-            <h1 className='text-center'>Welcome</h1>
+            <h1 className="text-center font-light">
+                {state === true ? (
+                    <>
+                        Welcome back, <span className="text-blue-500">rakinar2</span>!
+                    </>
+                ) : (
+                    "Welcome"
+                )}
+            </h1>
 
-            {state === null && (
-                <h3>Please wait...</h3>
-            )}
+            <br />
 
-            {state === true && (
-                <div>Logged in!</div>
-            )}
-
-            {state === false && (
+            {state === true ? (
                 <>
-                <br />
-                    <div className='text-center'>
-                        <MdLockOutline style={{ fontSize: "40vw" }} />
-                        <p className='text-[#999] mt-5'>Seems like you're not signed in to LastFM! Please sign in to continue.</p>
-                    </div>
                     <br />
-                    <div className='absolute bottom-3 right-3'>
-                        <CustomButton>Sign in to LastFM</CustomButton>
-                    </div>
+                    <MainActions />
+                    <br />
+                    <Card>
+                        <CardContent className="text-center">
+                            <h1 className="font-semibold flex items-center justify-center gap-2">
+                                <MdOutlineBarChart />
+                                {(40100).toLocaleString(undefined, {
+                                    useGrouping: true,
+                                })}
+                            </h1>
+
+                            <p className="text-[#999] mt-2">Total scrobbles imported</p>
+                        </CardContent>
+                    </Card>
                 </>
-            )}            
+            ) : (
+                <NotSignedIn state={state} />
+            )}
+
+            <br />
+            <MainBottom
+                state={state}
+                setState={setState}
+                absolute={true}
+            />
         </div>
     );
 }
