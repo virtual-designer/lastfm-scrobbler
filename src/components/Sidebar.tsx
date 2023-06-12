@@ -10,9 +10,9 @@ export default function Sidebar() {
     const [expanded, setExpanded] = useState(false);
 
     return (
-        <div className={"relative px-3 mr-3 bg-[#1f1e1e] " + (!expanded ? "w-[50px]" : "w-[20em]")}>
-            <MenuList>
-                <div className="mb-[10px]">
+        <div className={"relative h-[100vh] px-3 mr-3 bg-[#1f1e1e] " + (!expanded ? "w-[50px]" : "w-[20em]")}>
+            <MenuList className="relative h-[100%] !p-0">
+                <div className="mb-[10px] pt-4">
                     <Tooltip
                         title="Toggle Menu"
                         enterDelay={1200}
@@ -35,6 +35,7 @@ export default function Sidebar() {
                         title={title}
                         Icon={icon}
                         active={path === currentPath}
+                        bottom={path === "/settings"}
                     />
                 ))}
             </MenuList>

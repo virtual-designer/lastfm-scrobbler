@@ -7,6 +7,7 @@ export default function SidebarItem({
     title = "[No title]",
     expanded = false,
     topIcon = false,
+    bottom = false,
     ...props
 }) {
     const MenuButton = styled(Button)({
@@ -30,6 +31,13 @@ export default function SidebarItem({
             ? {
                   textAlign: "left",
                   justifyContent: "flex-start",
+              }
+            : {}),
+        ...(bottom
+            ? {
+                  position: "absolute",
+                  bottom: 10,
+                  left: 0,
               }
             : {}),
     });
