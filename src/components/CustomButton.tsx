@@ -1,12 +1,13 @@
-export default function CustomButton({ className = "", children, ...props }: any) {
+import { CircularProgress } from "@mui/material";
+import { Button } from "@nextui-org/react";
+
+export default function CustomButton({ loading = false, className = "", children, ...props }: any) {
     return (
-        <button
-            className={`px-[15px] py-[10px] text-[16px] rounded-[5px] focus:outline-double focus:outline-2 focus:outline-slate-400 cursor-pointer border-0 text-white bg-[#444] hover:bg-[#333]${
-                className !== "" ? ` ${className}` : ""
-            }`}
+        <Button
+            className={`!scale-[1] hover:!bg-[#0067d4] ${className !== "" ? ` ${className}` : ""}`}
             {...props}
         >
-            {children}
-        </button>
+            {loading ? <CircularProgress size={20} /> : children}
+        </Button>
     );
 }

@@ -1,9 +1,0 @@
-{
-    "endOfLine": "lf",
-    "editorconfig": true,
-    "singleQuote": false,
-    "useTabs": false,
-    "tabWidth": 4,
-    "singleAttributePerLine": true,
-    "printWidth": 140
-}

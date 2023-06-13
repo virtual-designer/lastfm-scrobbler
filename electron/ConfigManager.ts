@@ -19,7 +19,9 @@ export class ConfigManager extends Service {
     }
 
     load() {
-        if (!fs.existsSync(this.configDirectory)) fs.mkdirSync(this.configDirectory);
+        if (!fs.existsSync(this.configDirectory)) {
+            fs.mkdirSync(this.configDirectory);
+        }
 
         if (!fs.existsSync(this.configFileMain)) {
             fs.writeFileSync(this.configFileMain, "{}");
@@ -27,5 +29,13 @@ export class ConfigManager extends Service {
         } else {
             this.config = JSON.parse(fs.readFileSync(this.configFileMain).toString());
         }
+    }
+
+    write() {
+        if (!fs.existsSync(this.configDirectory)) {
+            fs.mkdirSync(this.configDirectory);
+        }
+
+        fs.writeFileSync(this.configFileMain, JSON.stringify(this.config, null, 4));
     }
 }

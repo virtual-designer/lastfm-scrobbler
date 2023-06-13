@@ -9,14 +9,12 @@ export default function Main() {
     const [state, setState] = useState<boolean | null>(null);
 
     useEffect(() => {
-        window.api.receive("unauthorized", () => {
-            setState(null);
+        window.api.receive("configLoad", (config: any) => {
+            setState(config?.user ? true : false);
         });
 
-        setState(true);
-
         return () => {
-            window.api.removeReceiveListeners("unauthorized");
+            window.api.removeReceiveListeners("configLoad");
         };
     }, []);
 
@@ -28,7 +26,7 @@ export default function Main() {
                         Welcome back, <span className="text-blue-500">rakinar2</span>!
                     </>
                 ) : (
-                    "Welcome"
+                    state === false ? "Welcome" : "Please wait"
                 )}
             </h1>
 

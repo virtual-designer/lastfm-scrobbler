@@ -17,7 +17,7 @@ const NotSignedIn: FC<NotSignedInProps> = ({ state }) => {
             )}
             <p className="text-[#999] mt-5">
                 {state === false && "Seems like you're not signed in to LastFM! Please sign in to continue."}
-                {state === null && "Please wait"}
+                {state === null && "We're working..."}
             </p>
         </div>
     );
